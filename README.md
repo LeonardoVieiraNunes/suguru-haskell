@@ -1,8 +1,8 @@
 Compilar:
-ghc -o main main.hs
+ghc -o Main Main.hs
 
 Rodar:
-./main
+./Main
 
 // TO DO
 
