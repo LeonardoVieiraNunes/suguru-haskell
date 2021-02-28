@@ -1,40 +1,43 @@
 module Modulos.OperacoesMatriz(getCand, getPosAdjacentes) where
-import Modulos.Construtores ( Celula, Candidatos, tabuleiro )
+import Modulos.Construtores ( Celula, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro )
 
 getCand :: Celula -> Candidatos
 getCand (id, val, cand) = cand
 
-getCelulaEsq :: Int -> Int -> (Int, Int)
-getCelulaEsq i j | i-1 > 0 = (i-1, j)
-                 | otherwise = (-1,-1)
+isInRange :: Tabuleiro -> Int -> Int -> Bool
+isInRange t i j = i <= tamanhoTabuleiro t && j <= tamanhoTabuleiro t
 
-getCelulaDir :: Int -> Int -> (Int, Int)
-getCelulaDir i j | i < length tabuleiro - 1 = (i+1, j)
-                 | otherwise = (-1, -1)
-
-getCelulaCima :: Int -> Int -> (Int, Int)
-getCelulaCima i j | j-1 > 0 = (i, j-1)
-                  | otherwise = (-1,-1)
-
-getCelulaBaixo :: Int -> Int -> (Int, Int)
-getCelulaBaixo i j | j < length tabuleiro - 1 = (i, j+1)
+getCelulaEsq :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaEsq t i j | isInRange t i j && j-1 > 0 = (i, j-1)
                    | otherwise = (-1,-1)
 
-getCelulaDiagEsqCima :: Int -> Int -> (Int, Int)
-getCelulaDiagEsqCima i j | i-1 > 0 && j-1 > 0 = (i-1, j-1)
-                         | otherwise = (-1,-1)
+getCelulaDir :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaDir t i j | isInRange t i j && j < tamanhoTabuleiro t = (i, j+1)
+                   | otherwise = (-1, -1)
 
-getCelulaDiagDirCima :: Int -> Int -> (Int, Int)
-getCelulaDiagDirCima i j | i < length tabuleiro - 1 && j-1 > 0 = (i+1, j+1)
-                         | otherwise = (-1,-1)
+getCelulaCima :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaCima t i j | isInRange t i j && i-1 > 0 = (i-1, j)
+                    | otherwise = (-1,-1)
 
-getCelulaDiagEsqBaixo :: Int -> Int -> (Int, Int)
-getCelulaDiagEsqBaixo i j | i-1 > 0 && j < length tabuleiro - 1 = (i-1, j+1)
-                          | otherwise = (-1,-1)
+getCelulaBaixo :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaBaixo t i j | isInRange t i j && i < tamanhoTabuleiro t = (i+1, j)
+                     | otherwise = (-1,-1)
 
-getCelulaDiagDirBaixo :: Int -> Int -> (Int, Int)
-getCelulaDiagDirBaixo i j | i < length tabuleiro - 1 && j < length tabuleiro - 1 = (i+1, j+1)
-                          | otherwise = (-1,-1)
+getCelulaDiagEsqCima :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaDiagEsqCima t i j | isInRange t i j && i-1 > 0 && j-1 > 0 = (i-1, j-1)
+                           | otherwise = (-1,-1)
 
-getPosAdjacentes :: Int -> Int -> [(Int, Int)]
-getPosAdjacentes i j = [getCelulaDiagEsqCima i j, getCelulaCima i j, getCelulaDiagDirCima i j, getCelulaEsq i j, getCelulaDir i j, getCelulaDiagEsqBaixo i j, getCelulaBaixo i j, getCelulaDiagDirBaixo i j]
+getCelulaDiagDirCima :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaDiagDirCima t i j | isInRange t i j && i-1 > 0 && j < tamanhoTabuleiro t = (i-1, j+1)
+                           | otherwise = (-1,-1)
+
+getCelulaDiagEsqBaixo :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaDiagEsqBaixo t i j | isInRange t i j && i < tamanhoTabuleiro t && j-1 > 0 = (i+1, j-1)
+                            | otherwise = (-1,-1)
+
+getCelulaDiagDirBaixo :: Tabuleiro -> Int -> Int -> (Int, Int)
+getCelulaDiagDirBaixo t i j | isInRange t i j && i < tamanhoTabuleiro t && j < tamanhoTabuleiro t = (i+1, j+1)
+                            | otherwise = (-1,-1)
+
+getPosAdjacentes :: Tabuleiro -> Int -> Int -> [(Int, Int)]
+getPosAdjacentes t i j = filter (\c -> c /= (-1,-1)) [getCelulaDiagEsqCima t i j, getCelulaCima t i j, getCelulaDiagDirCima t i j, getCelulaEsq t i j, getCelulaDir t i j, getCelulaDiagEsqBaixo t i j, getCelulaBaixo t i j, getCelulaDiagDirBaixo t i j]

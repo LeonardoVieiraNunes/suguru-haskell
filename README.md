@@ -1,12 +1,37 @@
+## Como rodar o código
+
 Compilar:
-ghc -o Main Main.hs
 
-Rodar:
-./Main
+`ghc -o Main Main.hs`
 
-// TO DO
+Executar:
 
-- criar função que recebe a posição de uma célula e retorna as posições dos seus vizinhos (base para percorrer a matriz) (leo)
+`./Main`
+
+----
+
+## Como usar o git / github
+
+- Atualizar o repositório:
+`git pull`
+
+- Verificar quais arquivos foram modificados:
+`git status`
+
+- Verificar quais mudanças foram feitas:
+`git diff` ou no terceiro icone do VS Code
+
+- Criar uma branch de trabalho:
+`git branch <nome>`
+
+- Trocar de branch:
+`git checkout <nome>`
+
+----
+
+## Tarefas:
+
+- criar função que recebe a posição de uma célula e retorna as posições dos seus vizinhos (base para percorrer a matriz) (leo) `OK!`
 
 - preencher os candidatos das células com valor == -1 com os valores possíveis para aquela célula (matheus)
 
