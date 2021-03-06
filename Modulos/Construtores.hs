@@ -1,6 +1,6 @@
-module Modulos.Construtores(Celula, Tabuleiro, Candidatos, celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro) where
+module Modulos.Construtores(Celula, Tabuleiro, Candidatos, celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro, preencherValorCandidatosCelula, preencherValorCandidatosTabuleiro) where
 
-import Data.Array (Array, array, (//))
+import Data.Array (Array, array, (//), (!))
 
 type IdGrupo = Int
 type Valor = Int
@@ -58,3 +58,10 @@ changeValorCelula i j nVal =
 
 setValue :: (Int, Int) -> Int -> Tabuleiro -> Tabuleiro
 setValue (x,y) a tb = tb // [((x,y), changeValorCelula x y a)]
+
+preencherValorCandidatosCelula :: Celula -> Celula
+preencherValorCandidatosCelula (id,val,cand) | val == -1 = (id,val,[1..tamanhoGrupos id])
+                                             | otherwise = (id,val,cand)
+
+preencherValorCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
+preencherValorCandidatosTabuleiro tb = tb // [((x,y),preencherValorCandidatosCelula(tb!(x,y))) | x<-[1..4], y<-[1..4]]
