@@ -1,6 +1,6 @@
 module Modulos.Construtores(Celula, Valor, Tabuleiro, Candidatos, celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro, setCands) where
 
-import Data.Array (Array, array, (//))
+import Data.Array (Array, array, (//), (!))
 
 type IdGrupo = Int
 type Valor = Int

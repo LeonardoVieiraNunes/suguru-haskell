@@ -1,6 +1,7 @@
-module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, preencherCandidatos) where
+module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, preencherCandidatos, isCandidato, getCelulaPos) where
 import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula )
-
+import Data.List(intersect) 
+import Data.Array (Array, array, (//), (!))
 getCand :: Celula -> Candidatos
 getCand (id, val, cand) = cand
 
@@ -51,3 +52,10 @@ getVal (id, val, cand) = val
 preencherCandidatos :: (Int, Int) -> Tabuleiro -> Tabuleiro
 preencherCandidatos (x,y) tb | getVal (celula(x,y)) == -1 =  setCands (x,y) [1,2,3,4,5] tb
                              | otherwise = tb
+
+isCandidato :: Celula  -> Int -> Bool 
+isCandidato c z | intersect (getCand(c))  [z] == [] = False  
+                   |otherwise = True  
+
+getCelulaPos :: (Int ,Int ) -> Tabuleiro -> Celula 
+getCelulaPos (x,y) tb = tb!(x,y)
