@@ -35,7 +35,7 @@ Executar:
 
 - preencher os candidatos das células com valor == -1 com os valores possíveis para aquela célula (matheus)
 
-- ao inserir um valor na célula, verificar se o valor é um candidato (leo)
+- antes de inserir um valor na célula, verificar se o valor é um candidato (leo)
 
 - ao inserir um valor em uma célula, apagar o valor do candidato no grupo e nos adjacentes (leo)
 
