@@ -1,6 +1,7 @@
-module Modulos.OperacoesMatriz(getCand, getPosAdjacentes) where
-import Modulos.Construtores ( Celula, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro )
-
+module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, preencherCandidatos, isCandidato, getCelulaPos) where
+import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula )
+import Data.List(intersect) 
+import Data.Array (Array, array, (//), (!))
 getCand :: Celula -> Candidatos
 getCand (id, val, cand) = cand
 
@@ -41,3 +42,20 @@ getCelulaDiagDirBaixo t i j | isInRange t i j && i < tamanhoTabuleiro t && j < t
 
 getPosAdjacentes :: Tabuleiro -> Int -> Int -> [(Int, Int)]
 getPosAdjacentes t i j = filter (\c -> c /= (-1,-1)) [getCelulaDiagEsqCima t i j, getCelulaCima t i j, getCelulaDiagDirCima t i j, getCelulaEsq t i j, getCelulaDir t i j, getCelulaDiagEsqBaixo t i j, getCelulaBaixo t i j, getCelulaDiagDirBaixo t i j]
+
+-- funcoes novas
+
+getVal :: Celula -> Valor
+getVal (id, val, cand) = val
+
+
+preencherCandidatos :: (Int, Int) -> Tabuleiro -> Tabuleiro
+preencherCandidatos (x,y) tb | getVal (celula(x,y)) == -1 =  setCands (x,y) [1,2,3,4,5] tb
+                             | otherwise = tb
+
+isCandidato :: Celula  -> Int -> Bool 
+isCandidato c z | intersect (getCand(c))  [z] == [] = False  
+                   |otherwise = True  
+
+getCelulaPos :: (Int ,Int ) -> Tabuleiro -> Celula 
+getCelulaPos (x,y) tb = tb!(x,y)
