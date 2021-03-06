@@ -33,7 +33,7 @@ Executar:
 
 - criar função que recebe a posição de uma célula e retorna as posições dos seus vizinhos (base para percorrer a matriz) (leo) `OK!`
 
-- preencher os candidatos das células com valor == -1 com os valores possíveis para aquela célula (matheus)
+- preencher os candidatos das células com valor == -1 com os valores possíveis para aquela célula (matheus) `ok`
 
 - ao inserir um valor na célula, verificar se o valor é um candidato (leo)
 
