@@ -59,7 +59,6 @@ changeValorCelula i j nVal =
 setValue :: (Int, Int) -> Int -> Tabuleiro -> Tabuleiro
 setValue (x,y) a tb = tb // [((x,y), changeValorCelula x y a)]
 
--- funcoes novas
 changeCandsCelula :: Int -> Int -> [Int] -> Celula
 changeCandsCelula i j nCand =
     let (id,val,cand) = celula (i,j)

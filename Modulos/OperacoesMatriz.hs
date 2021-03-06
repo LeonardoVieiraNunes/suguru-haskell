@@ -1,7 +1,14 @@
-module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, preencherCandidatos, isCandidato, getCelulaPos) where
-import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula )
-import Data.List(intersect) 
+module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro) where
+import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula)
+import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
+
+tamanhoGrupo :: Int -> Int
+tamanhoGrupo 1 = 4
+tamanhoGrupo 2 = 5
+tamanhoGrupo 3 = 3
+tamanhoGrupo 4 = 4
+
 getCand :: Celula -> Candidatos
 getCand (id, val, cand) = cand
 
@@ -43,19 +50,37 @@ getCelulaDiagDirBaixo t i j | isInRange t i j && i < tamanhoTabuleiro t && j < t
 getPosAdjacentes :: Tabuleiro -> Int -> Int -> [(Int, Int)]
 getPosAdjacentes t i j = filter (\c -> c /= (-1,-1)) [getCelulaDiagEsqCima t i j, getCelulaCima t i j, getCelulaDiagDirCima t i j, getCelulaEsq t i j, getCelulaDir t i j, getCelulaDiagEsqBaixo t i j, getCelulaBaixo t i j, getCelulaDiagDirBaixo t i j]
 
--- funcoes novas
-
-getVal :: Celula -> Valor
+getVal :: Celula -> Int
 getVal (id, val, cand) = val
 
-
-preencherCandidatos :: (Int, Int) -> Tabuleiro -> Tabuleiro
-preencherCandidatos (x,y) tb | getVal (celula(x,y)) == -1 =  setCands (x,y) [1,2,3,4,5] tb
-                             | otherwise = tb
-
-isCandidato :: Celula  -> Int -> Bool 
-isCandidato c z | intersect (getCand(c))  [z] == [] = False  
-                   |otherwise = True  
-
-getCelulaPos :: (Int ,Int ) -> Tabuleiro -> Celula 
+getCelulaPos :: (Int ,Int ) -> Tabuleiro -> Celula
 getCelulaPos (x,y) tb = tb!(x,y)
+
+preencherValorCandidatosCelula :: Celula -> Celula
+preencherValorCandidatosCelula (id,val,cand) | val == -1 = (id,val,[1..tamanhoGrupo id])
+                                             | otherwise = (id,val,cand)
+
+preencherValorCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
+preencherValorCandidatosTabuleiro tb = tb // [((x,y),preencherValorCandidatosCelula(tb!(x,y))) | x<-[1..4], y<-[1..4]]
+
+getValorAdjacentes :: (Int,Int) -> Tabuleiro -> [Int]
+getValorAdjacentes (x,y) tb = filter (\x-> x /= -1) [ getVal(getCelulaPos co tb) | co <- getPosAdjacentes tb x y]
+
+updateCandidatosCelula :: (Int,Int) -> Tabuleiro -> Celula
+updateCandidatosCelula (x,y) tb =
+    let (id,val,cand) = getCelulaPos(x,y) tb
+    in (id,val, cand \\ getValorAdjacentes(x,y) tb)
+
+updateCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
+updateCandidatosTabuleiro tb = tb // [((x,y),updateCandidatosCelula(x,y) tb) | x<-[1..4], y<-[1..4]]
+
+insereValorCelulaUmCandidato :: Celula -> Celula
+insereValorCelulaUmCandidato (id,val,cand) | val == -1 && length cand == 1 = (id,head cand,[])
+                                           | otherwise = (id,val,cand)
+
+preencheUnicosCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
+preencheUnicosCandidatosTabuleiro tb = tb // [((x,y),insereValorCelulaUmCandidato(tb!(x,y))) | x<-[1..4], y<-[1..4]]
+
+isCandidato :: Celula  -> Int -> Bool
+isCandidato c z | intersect (getCand(c))  [z] == [] = False
+                   |otherwise = True
