@@ -1,5 +1,5 @@
-module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro) where
-import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula)
+module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
+import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
 
@@ -84,3 +84,13 @@ preencheUnicosCandidatosTabuleiro tb = tb // [((x,y),insereValorCelulaUmCandidat
 isCandidato :: Celula  -> Int -> Bool
 isCandidato c z | intersect (getCand(c))  [z] == [] = False
                    |otherwise = True
+
+otimizarTabuleiro :: Tabuleiro -> Tabuleiro 
+otimizarTabuleiro tb | tb == preencheUnicosCandidatosTabuleiro tb = tb
+                     | otherwise = otimizarTabuleiro(updateCandidatosTabuleiro(preencheUnicosCandidatosTabuleiro tb))
+
+tabuleiroInicialOtimizado :: Tabuleiro
+tabuleiroInicialOtimizado =
+    let a = preencherValorCandidatosTabuleiro initTabuleiro
+        b = updateCandidatosTabuleiro a
+    in otimizarTabuleiro b
