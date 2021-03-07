@@ -1,4 +1,4 @@
-module Modulos.OperacoesMatriz(getCand,getVal,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
+module Modulos.OperacoesMatriz(getCand,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
 import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
@@ -8,9 +8,6 @@ tamanhoGrupo 1 = 4
 tamanhoGrupo 2 = 5
 tamanhoGrupo 3 = 3
 tamanhoGrupo 4 = 4
-
-getCand :: Celula -> Candidatos
-getCand (id, val, cand) = cand
 
 isInRange :: Tabuleiro -> Int -> Int -> Bool
 isInRange t i j = i <= tamanhoTabuleiro t && j <= tamanhoTabuleiro t
@@ -53,6 +50,12 @@ getPosAdjacentes t i j = filter (\c -> c /= (-1,-1)) [getCelulaDiagEsqCima t i j
 getVal :: Celula -> Int
 getVal (id, val, cand) = val
 
+getCand :: Celula -> [Int]
+getCand (id, val, cand) = cand
+
+getGrupoEvalor :: Celula -> (Int,Int)
+getGrupoEvalor (id,val,_) = (id,val)
+
 getCelulaPos :: (Int ,Int) -> Tabuleiro -> Celula
 getCelulaPos (x,y) tb = tb!(x,y)
 
@@ -65,6 +68,9 @@ preencherValorCandidatosTabuleiro tb = tb // [((x,y),preencherValorCandidatosCel
 
 getValorAdjacentes :: (Int,Int) -> Tabuleiro -> [Int]
 getValorAdjacentes (x,y) tb = filter (\x-> x /= -1) [ getVal(getCelulaPos co tb) | co <- getPosAdjacentes tb x y]
+
+getCandAdjacentes :: (Int,Int) -> Tabuleiro -> [[Int]]
+getCandAdjacentes (x,y) tb = filter (/= []) [getCand(getCelulaPos co tb) | co <- getPosAdjacentes tb x y]
 
 updateCandidatosCelula :: (Int,Int) -> Tabuleiro -> Celula
 updateCandidatosCelula (x,y) tb =
@@ -85,7 +91,7 @@ isCandidato :: Celula  -> Int -> Bool
 isCandidato c z | intersect (getCand(c))  [z] == [] = False
                    |otherwise = True
 
-otimizarTabuleiro :: Tabuleiro -> Tabuleiro 
+otimizarTabuleiro :: Tabuleiro -> Tabuleiro
 otimizarTabuleiro tb | tb == preencheUnicosCandidatosTabuleiro tb = tb
                      | otherwise = otimizarTabuleiro(updateCandidatosTabuleiro(preencheUnicosCandidatosTabuleiro tb))
 
@@ -98,3 +104,16 @@ tabuleiroInicialOtimizado =
 proximaCoordenada :: (Int,Int) -> (Int,Int)
 proximaCoordenada (x,y) | y < 4 = (x,y+1)
                         | otherwise = (x+1,1)
+
+verfMesmoUnicoCandAdjacenteCelula :: (Int,Int) -> Tabuleiro -> Bool
+verfMesmoUnicoCandAdjacenteCelula (x,y) tb = length (getCand (tb!(x,y))) == 1 && getCand (tb!(x,y)) `elem` getCandAdjacentes (x,y) tb
+
+verfMesmoUnicoElementoAdjacenteTabuleiro :: Tabuleiro -> Bool
+verfMesmoUnicoElementoAdjacenteTabuleiro tb = or ([verfMesmoUnicoCandAdjacenteCelula (x,y) tb | x<-[1..4], y<-[1..4]])
+
+-- grupo, valor
+getGrupoEvalorCelulasTabuleiro :: Tabuleiro -> [(Int, Int)]
+getGrupoEvalorCelulasTabuleiro tb = filter (\(id,val) -> val /= -1) [getGrupoEvalor(tb!(x,y)) | x<-[1..4], y<-[1..4]]
+
+verfDuplicatas :: Tabuleiro -> [Int]
+verfDuplicatas tb = 

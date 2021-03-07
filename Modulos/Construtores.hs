@@ -1,4 +1,4 @@
-module Modulos.Construtores(Celula, Valor, Tabuleiro, Candidatos, celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro, setCands) where
+module Modulos.Construtores(Celula, Valor, Tabuleiro, Candidatos,setCand,celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro, setCands) where
 
 import Data.Array (Array, array, (//), (!))
 
@@ -65,5 +65,13 @@ changeCandsCelula i j nCand =
     let (id,val,cand) = celula (i,j)
     in (id,val,nCand)
 
+changeCandCelula :: Int -> Int -> Int -> Celula
+changeCandCelula i j nCand =
+    let (id,val,cand) = celula (i,j)
+    in (id,nCand,cand)
+
 setCands :: (Int, Int) -> [Int] -> Tabuleiro -> Tabuleiro
 setCands (x,y) a tb = tb // [((x,y), changeCandsCelula x y a)]
+
+setCand :: (Int,Int) -> Int -> Tabuleiro -> Tabuleiro
+setCand (x,y) cand tb = tb // [((x,y), changeCandCelula x y cand)]
