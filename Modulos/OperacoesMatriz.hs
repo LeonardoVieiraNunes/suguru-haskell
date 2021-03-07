@@ -1,4 +1,4 @@
-module Modulos.OperacoesMatriz(getCand, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
+module Modulos.OperacoesMatriz(getCand,getVal,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
 import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
@@ -53,7 +53,7 @@ getPosAdjacentes t i j = filter (\c -> c /= (-1,-1)) [getCelulaDiagEsqCima t i j
 getVal :: Celula -> Int
 getVal (id, val, cand) = val
 
-getCelulaPos :: (Int ,Int ) -> Tabuleiro -> Celula
+getCelulaPos :: (Int ,Int) -> Tabuleiro -> Celula
 getCelulaPos (x,y) tb = tb!(x,y)
 
 preencherValorCandidatosCelula :: Celula -> Celula
@@ -94,3 +94,7 @@ tabuleiroInicialOtimizado =
     let a = preencherValorCandidatosTabuleiro initTabuleiro
         b = updateCandidatosTabuleiro a
     in otimizarTabuleiro b
+
+proximaCoordenada :: (Int,Int) -> (Int,Int)
+proximaCoordenada (x,y) | y < 4 = (x,y+1)
+                        | otherwise = (x+1,1)

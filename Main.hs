@@ -1,19 +1,15 @@
 import Data.Array (Array, (!))
-import Modulos.OperacoesMatriz ( getPosAdjacentes, preencherCandidatos, isCandidato, getCand, getCelulaPos )
+import Modulos.OperacoesMatriz ( getPosAdjacentes,getVal,proximaCoordenada,preencherValorCandidatosTabuleiro, isCandidato, getCand, getCelulaPos,otimizarTabuleiro, updateCandidatosTabuleiro,tabuleiroInicialOtimizado)
 import Modulos.Construtores(Tabuleiro, Celula, tabuleiro, celula, setValue, initTabuleiro, tamanhoTabuleiro, setCands)
+import Modulos.Pilha(setTabPilha)
+
 
 main :: IO ()
 main = do
-    print "Hello!"
-    -- como funfa pra setar o valor no tabuleiro
-    let a = setValue (1, 1) 99 initTabuleiro
-        b = setValue (1, 2) (-1) a
-        c = preencherCandidatos (1, 2) b 
-        f = getCelulaPos  (1, 2) c
-        e = isCandidato f 2
-    --print a
-    --print b
+    -- print tabuleiroInicialOtimizado
+    let a = setTabPilha [] tabuleiroInicialOtimizado (1,1)
+        b = setTabPilha a (last a) (1,2)
+        c = setTabPilha b (last b) (1,3)
+    print (length c)
     print c
-    print e
-    
-    
+    print "Hello!"

@@ -8,6 +8,7 @@ type Candidatos = [Int]
 type Celula = (Int, Int, [Int])
 type Tabuleiro = Array (Int,Int) Celula
 
+
 tamanhoGrupos :: Int -> Int
 tamanhoGrupos 1 = 4
 tamanhoGrupos 2 = 5
