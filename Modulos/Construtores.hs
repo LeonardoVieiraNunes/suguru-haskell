@@ -10,31 +10,74 @@ type Tabuleiro = Array (Int,Int) Celula
 
 
 tamanhoGrupos :: Int -> Int
-tamanhoGrupos 1 = 4
-tamanhoGrupos 2 = 5
-tamanhoGrupos 3 = 3
-tamanhoGrupos 4 = 4
+tamanhoGrupos 1 = 6
+tamanhoGrupos 2 = 6
+tamanhoGrupos 3 = 1
+tamanhoGrupos 4 = 5
+tamanhoGrupos 5 = 6
+tamanhoGrupos 6 = 6
+tamanhoGrupos 7 = 6
+tamanhoGrupos 8 = 5
+tamanhoGrupos 9 = 3
+tamanhoGrupos 10 = 5
 
 celula :: (Int, Int) -> Celula
-celula (1,1) = (1,2,[])
+celula (1,1) = (1,5,[])
 celula (1,2) = (1,-1,[])
-celula (1,3) = (2,-1,[])
-celula (1,4) = (2,3,[])
+celula (1,3) = (2,5,[])
+celula (1,4) = (2,-1,[])
+celula (1,5) = (2,1,[])
+celula (1,6) = (2,-1,[])
+celula (1,7) = (3,-1,[])
 
 celula (2,1) = (1,-1,[])
-celula (2,2) = (1,-1,[])
-celula (2,3) = (2,4,[])
-celula (2,4) = (2,-1,[])
+celula (2,2) = (1,3,[])
+celula (2,3) = (4,-1,[])
+celula (2,4) = (4,-1,[])
+celula (2,5) = (4,-1,[])
+celula (2,6) = (2,4,[])
+celula (2,7) = (2,-1,[])
 
-celula (3,1) = (3,3,[])
-celula (3,2) = (3,-1,[])
-celula (3,3) = (2,-1,[])
-celula (3,4) = (4,-1,[])
+celula (3,1) = (1,6,[])
+celula (3,2) = (1,2,[])
+celula (3,3) = (5,-1,[])
+celula (3,4) = (5,-1,[])
+celula (3,5) = (4,5,[])
+celula (3,6) = (6,6,[])
+celula (3,7) = (6,2,[])
 
-celula (4,1) = (3,-1,[])
-celula (4,2) = (4,-1,[])
-celula (4,3) = (4,-1,[])
-celula (4,4) = (4,2,[])
+celula (4,1) = (7,5,[])
+celula (4,2) = (7,-1,[])
+celula (4,3) = (5,3,[])
+celula (4,4) = (5,2,[])
+celula (4,5) = (4,-1,[])
+celula (4,6) = (6,-1,[])
+celula (4,7) = (6,-1,[])
+
+celula (5,1) = (7,3,[])
+celula (5,2) = (7,-1,[])
+celula (5,3) = (5,4,[])
+celula (5,4) = (5,-1,[])
+celula (5,5) = (6,-1,[])
+celula (5,6) = (6,-1,[])
+celula (5,7) = (8,2,[])
+
+celula (6,1) = (7,-1,[])
+celula (6,2) = (9,1,[])
+celula (6,3) = (9,-1,[])
+celula (6,4) = (9,-1,[])
+celula (6,5) = (8,-1,[])
+celula (6,6) = (8,-1,[])
+celula (6,7) = (8,-1,[])
+
+celula (7,1) = (7,6,[])
+celula (7,2) = (10,-1,[])
+celula (7,3) = (10,4,[])
+celula (7,4) = (10,-1,[])
+celula (7,5) = (10,3,[])
+celula (7,6) = (10,-1,[])
+celula (7,7) = (8,5,[])
+
 -- celula de controle
 celula (-1,-1) = (-1,-1,[-1])
 

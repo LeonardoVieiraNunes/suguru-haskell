@@ -1,5 +1,5 @@
 import Data.Array (Array, (!))
-import Modulos.OperacoesMatriz ( getPosAdjacentes,getGrupoEvalorCelulasTabuleiro,getVal,proximaCoordenada,preencherValorCandidatosTabuleiro, isCandidato, getCand, getCelulaPos,otimizarTabuleiro, updateCandidatosTabuleiro,tabuleiroInicialOtimizado)
+import Modulos.OperacoesMatriz ( getPosAdjacentes,getGrupoEvalorCelulasTabuleiro,getVal,proximaCoordenada,preencherValorCandidatosTabuleiro, isCandidato, getCand, getCelulaPos,otimizarTabuleiro, updateCandidatosTabuleiro,tabuleiroInicialOtimizado, agruparDuplicatas)
 import Modulos.Construtores(Tabuleiro, Celula, tabuleiro, celula, setValue, initTabuleiro, tamanhoTabuleiro, setCands)
 import Modulos.Pilha(setTabPilha, funcaoTop)
 
@@ -20,5 +20,6 @@ main = do
     -- print i
     -- print (funcaoTop a (1,1) (1,1))
     -- print(funcaoTop a (1,1))
-    print (getGrupoEvalorCelulasTabuleiro tabuleiroInicialOtimizado)
+    --print (getGrupoEvalorCelulasTabuleiro tabuleiroInicialOtimizado)
+    print (length (agruparDuplicatas tabuleiroInicialOtimizado (1,1)))
     print "Hello!"
