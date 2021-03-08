@@ -27,10 +27,10 @@ funcaoTop p (x,y) =
     let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro(getTabuleiro (head p))
         todosDiferentes = allDifferent(getGrupoEvalorCelulasTabuleiro(getTabuleiro (head p)))
         estaCompleto = verfTabuleiroCompleto(getTabuleiro(head p))
-    in if (x,y) == (5,1) then
+    in if estaCompleto && not erro1 && todosDiferentes then
             [head p]
         else if not erro1 && todosDiferentes && not estaCompleto then
-            let nPilha = setTabPilha p (getTabuleiro (head p)) (proximaCoordenada (getCoordenada (head p)))
+            let nPilha = setTabPilha p (preencheUnicosCandidatosTabuleiro (getTabuleiro (head p))) (x,y)
             in funcaoTop nPilha (proximaCoordenada (getCoordenada (head p)))
         else
             funcaoTop (tail p) (getCoordenada (head (tail p)))
