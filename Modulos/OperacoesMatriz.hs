@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 module Modulos.OperacoesMatriz(getCand, agruparDuplicatas,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
+=======
+module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,filterById,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
+>>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
 import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
 
 tamanhoGrupo :: Int -> Int
-tamanhoGrupo 1 = 4
-tamanhoGrupo 2 = 5
-tamanhoGrupo 3 = 3
-tamanhoGrupo 4 = 4
+tamanhoGrupo 1 = 6
+tamanhoGrupo 2 = 6
+tamanhoGrupo 3 = 1
+tamanhoGrupo 4 = 5
+tamanhoGrupo 5 = 6
+tamanhoGrupo 6 = 6
+tamanhoGrupo 7 = 6
+tamanhoGrupo 8 = 5
+tamanhoGrupo 9 = 3
+tamanhoGrupo 10 = 5
 
 isInRange :: Tabuleiro -> Int -> Int -> Bool
 isInRange t i j = i <= tamanhoTabuleiro t && j <= tamanhoTabuleiro t
@@ -64,7 +74,7 @@ preencherValorCandidatosCelula (id,val,cand) | val == -1 = (id,val,[1..tamanhoGr
                                              | otherwise = (id,val,cand)
 
 preencherValorCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
-preencherValorCandidatosTabuleiro tb = tb // [((x,y),preencherValorCandidatosCelula(tb!(x,y))) | x<-[1..4], y<-[1..4]]
+preencherValorCandidatosTabuleiro tb = tb // [((x,y),preencherValorCandidatosCelula(tb!(x,y))) | x<-[1..7], y<-[1..7]]
 
 getValorAdjacentes :: (Int,Int) -> Tabuleiro -> [Int]
 getValorAdjacentes (x,y) tb = filter (\x-> x /= -1) [ getVal(getCelulaPos co tb) | co <- getPosAdjacentes tb x y]
@@ -75,17 +85,17 @@ getCandAdjacentes (x,y) tb = filter (/= []) [getCand(getCelulaPos co tb) | co <-
 updateCandidatosCelula :: (Int,Int) -> Tabuleiro -> Celula
 updateCandidatosCelula (x,y) tb =
     let (id,val,cand) = getCelulaPos(x,y) tb
-    in (id,val, cand \\ getValorAdjacentes(x,y) tb)
+    in (id,val, (cand \\ getValorAdjacentes(x,y) tb) \\ getValorGrupoById id tb)
 
 updateCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
-updateCandidatosTabuleiro tb = tb // [((x,y),updateCandidatosCelula(x,y) tb) | x<-[1..4], y<-[1..4]]
+updateCandidatosTabuleiro tb = tb // [((x,y),updateCandidatosCelula(x,y) tb) | x<-[1..7], y<-[1..7]]
 
 insereValorCelulaUmCandidato :: Celula -> Celula
 insereValorCelulaUmCandidato (id,val,cand) | val == -1 && length cand == 1 = (id,head cand,[])
                                            | otherwise = (id,val,cand)
 
 preencheUnicosCandidatosTabuleiro :: Tabuleiro -> Tabuleiro
-preencheUnicosCandidatosTabuleiro tb = tb // [((x,y),insereValorCelulaUmCandidato(tb!(x,y))) | x<-[1..4], y<-[1..4]]
+preencheUnicosCandidatosTabuleiro tb = tb // [((x,y),insereValorCelulaUmCandidato(tb!(x,y))) | x<-[1..7], y<-[1..7]]
 
 isCandidato :: Celula  -> Int -> Bool
 isCandidato c z | intersect (getCand(c))  [z] == [] = False
@@ -102,21 +112,38 @@ tabuleiroInicialOtimizado =
     in otimizarTabuleiro b
 
 proximaCoordenada :: (Int,Int) -> (Int,Int)
-proximaCoordenada (x,y) | y < 4 = (x,y+1)
+proximaCoordenada (x,y) | y < 7 = (x,y+1)
                         | otherwise = (x+1,1)
 
 verfMesmoUnicoCandAdjacenteCelula :: (Int,Int) -> Tabuleiro -> Bool
 verfMesmoUnicoCandAdjacenteCelula (x,y) tb = length (getCand (tb!(x,y))) == 1 && getCand (tb!(x,y)) `elem` getCandAdjacentes (x,y) tb
 
 verfMesmoUnicoElementoAdjacenteTabuleiro :: Tabuleiro -> Bool
-verfMesmoUnicoElementoAdjacenteTabuleiro tb = or ([verfMesmoUnicoCandAdjacenteCelula (x,y) tb | x<-[1..4], y<-[1..4]])
+verfMesmoUnicoElementoAdjacenteTabuleiro tb = or ([verfMesmoUnicoCandAdjacenteCelula (x,y) tb | x<-[1..7], y<-[1..7]])
+
+verfTabuleiroCompleto :: Tabuleiro -> Bool
+verfTabuleiroCompleto tb = and [getVal(tb!(x,y)) /= -1 | x<-[1..7], y<-[1..7]]
 
 -- grupo, valor
 getGrupoEvalorCelulasTabuleiro :: Tabuleiro -> [(Int, Int)]
-getGrupoEvalorCelulasTabuleiro tb = filter (\(id,val) -> val /= -1) [getGrupoEvalor(tb!(x,y)) | x<-[1..4], y<-[1..4]]
+getGrupoEvalorCelulasTabuleiro tb = filter (\(id,val) -> val /= -1) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
+
+filterById :: Int -> Tabuleiro -> [(Int,Int)]
+filterById id tb = filter (\(i,val) -> i==id) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
+
+getValorGrupoById :: Int -> Tabuleiro -> [Int]
+getValorGrupoById id tb = map snd (filterById id tb)
+
+allDifferent :: (Eq a) => [a] -> Bool
+allDifferent []     = True
+allDifferent (x:xs) = x `notElem` xs && allDifferent xs
 
 agruparDuplicatas :: Tabuleiro -> (Int ,Int) -> [(Int,Int)]
+<<<<<<< HEAD
 agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..4], y<-[1..4]]
 
 agruparValoresGrupo :: Tabuleiro -> Int  -> [Int]
 agruparValoresGrupo tb idgp = filter (\val -> val /= -1) []
+=======
+agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
+>>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27

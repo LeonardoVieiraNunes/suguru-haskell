@@ -1,7 +1,7 @@
 module Modulos.Pilha(separarCandidatos, setTabPilha, funcaoTop) where
 import Data.Array ((!))
 import Modulos.Construtores(Tabuleiro,setCands,setCand)
-import Modulos.OperacoesMatriz(getCand,getGrupoEvalorCelulasTabuleiro,getVal,updateCandidatosTabuleiro,verfMesmoUnicoElementoAdjacenteTabuleiro,preencheUnicosCandidatosTabuleiro,proximaCoordenada)
+import Modulos.OperacoesMatriz(getCand,getGrupoEvalorCelulasTabuleiro,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,updateCandidatosTabuleiro,verfMesmoUnicoElementoAdjacenteTabuleiro,preencheUnicosCandidatosTabuleiro,proximaCoordenada, allDifferent)
 
 type Pilha = [((Int,Int), Tabuleiro)]
 
@@ -22,27 +22,15 @@ getCoordenada ((x,y),tb) = (x,y)
 getTabuleiro :: ((Int,Int),Tabuleiro) -> Tabuleiro
 getTabuleiro ((x,y), tab) = tab
 
--- funcaoTop :: Pilha -> (Int,Int) -> (Int,Int) -> Pilha
--- funcaoTop (ph:pb) (x,y) origem =
---     -- verf a existência um unico candidato disponivel para celulas adjacentes, sinal que deu merda e passar pra proxima execução da pilha
---     -- se existe candidato vazio erro 2
---     if verfMesmoUnicoElementoAdjacenteTabuleiro (updateCandidatosTabuleiro ph) then
---             funcaoTop pb origem origem
---     else if (x,y) == (1,4) then
---             ph:pb
---     else
---         let tbLimpaTb = preencheUnicosCandidatosTabuleiro (updateCandidatosTabuleiro ph)
---             p2 = setTabPilha (ph:pb) tbLimpaTb (proximaCoordenada(x,y))
---         in funcaoTop p2 (proximaCoordenada(x,y)) (proximaCoordenada (x,y))
-
 funcaoTop :: Pilha -> (Int,Int) -> Pilha
-funcaoTop (ph:pb) (x,y) =
-    let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro (updateCandidatosTabuleiro (getTabuleiro ph))
-
-    in if erro1 then
-            funcaoTop pb (getCoordenada ph)
-        else if (x,y) == (4,4) then
-            ph:pb
+funcaoTop p (x,y) =
+    let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro(getTabuleiro (head p))
+        todosDiferentes = allDifferent(getGrupoEvalorCelulasTabuleiro(getTabuleiro (head p)))
+        estaCompleto = verfTabuleiroCompleto(getTabuleiro(head p))
+    in if (x,y) == (5,1) then
+            [head p]
+        else if not erro1 && todosDiferentes && not estaCompleto then
+            let nPilha = setTabPilha p (getTabuleiro (head p)) (proximaCoordenada (getCoordenada (head p)))
+            in funcaoTop nPilha (proximaCoordenada (getCoordenada (head p)))
         else
-            let nPilha = setTabPilha (ph:pb) (getTabuleiro ph) (proximaCoordenada (x,y))
-            in funcaoTop nPilha (proximaCoordenada (x,y))
+            funcaoTop (tail p) (getCoordenada (head (tail p)))

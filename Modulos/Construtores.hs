@@ -77,16 +77,22 @@ celula (7,4) = (10,-1,[])
 celula (7,5) = (10,3,[])
 celula (7,6) = (10,-1,[])
 celula (7,7) = (8,5,[])
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
 -- celula de controle
 celula (-1,-1) = (-1,-1,[-1])
 
 initTabuleiro :: Tabuleiro
-initTabuleiro = tabuleiro (array ((1,1), (4,4)) [
-    ((1,1), celula(1,1)), ((1,2), celula(1,2)),((1,3), celula(1,3)),((1,4), celula(1,4)),
-    ((2,1), celula(2,1)), ((2,2), celula(2,2)),((2,3), celula(2,3)),((2,4), celula(2,4)),
-    ((3,1), celula(3,1)), ((3,2), celula(3,2)),((3,3), celula(3,3)),((3,4), celula(3,4)),
-    ((4,1), celula(4,1)), ((4,2), celula(4,2)),((4,3), celula(4,3)),((4,4), celula(4,4))
+initTabuleiro = tabuleiro (array ((1,1), (7,7)) [
+    ((1,1), celula(1,1)), ((1,2), celula(1,2)),((1,3), celula(1,3)),((1,4), celula(1,4)),((1,5), celula(1,5)),((1,6), celula(1,6)), ((1,7), celula(1,7)),
+    ((2,1), celula(2,1)), ((2,2), celula(2,2)),((2,3), celula(2,3)),((2,4), celula(2,4)),((2,5), celula(2,5)),((2,6), celula(2,6)), ((2,7), celula(2,7)),
+    ((3,1), celula(3,1)), ((3,2), celula(3,2)),((3,3), celula(3,3)),((3,4), celula(3,4)),((3,5), celula(3,5)),((3,6), celula(3,6)), ((3,7), celula(3,7)),
+    ((4,1), celula(4,1)), ((4,2), celula(4,2)),((4,3), celula(4,3)),((4,4), celula(4,4)),((4,5), celula(4,5)),((4,6), celula(4,6)), ((4,7), celula(4,7)),
+    ((5,1), celula(5,1)), ((5,2), celula(5,2)),((5,3), celula(5,3)),((5,4), celula(5,4)),((5,5), celula(5,5)),((5,6), celula(5,6)), ((5,7), celula(5,7)),
+    ((6,1), celula(6,1)), ((6,2), celula(6,2)),((6,3), celula(6,3)),((6,4), celula(6,4)),((6,5), celula(6,5)),((6,6), celula(6,6)), ((6,7), celula(6,7)),
+    ((7,1), celula(7,1)), ((7,2), celula(7,2)),((7,3), celula(7,3)),((7,4), celula(7,4)),((7,5), celula(7,5)),((7,6), celula(7,6)), ((7,7), celula(7,7))
     ])
 
 tabuleiro :: Tabuleiro -> Tabuleiro

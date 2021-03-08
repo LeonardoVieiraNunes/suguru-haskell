@@ -1,12 +1,15 @@
 import Data.Array (Array, (!))
+<<<<<<< HEAD
 import Modulos.OperacoesMatriz ( getPosAdjacentes,getGrupoEvalorCelulasTabuleiro,getVal,proximaCoordenada,preencherValorCandidatosTabuleiro, isCandidato, getCand, getCelulaPos,otimizarTabuleiro, updateCandidatosTabuleiro,tabuleiroInicialOtimizado, agruparDuplicatas)
+=======
+import Modulos.OperacoesMatriz ( getPosAdjacentes,filterById,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,proximaCoordenada,preencherValorCandidatosTabuleiro, isCandidato, getCand, getCelulaPos,otimizarTabuleiro, updateCandidatosTabuleiro,tabuleiroInicialOtimizado, verfTabuleiroCompleto)
+>>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
 import Modulos.Construtores(Tabuleiro, Celula, tabuleiro, celula, setValue, initTabuleiro, tamanhoTabuleiro, setCands)
 import Modulos.Pilha(setTabPilha, funcaoTop)
 
 
 main :: IO ()
 main = do
-    -- print tabuleiroInicialOtimizado
     let a = [((1,1),tabuleiroInicialOtimizado)]
     --     b = setTabPilha a (head a) (1,2)
     --     c = setTabPilha b (head b) (1,3)
@@ -17,9 +20,14 @@ main = do
     --     h = setTabPilha g (head g) (2,4)
     --     i = setTabPilha h (head h) (3,1)
     -- print (length c)
+<<<<<<< HEAD
     -- print i
     -- print (funcaoTop a (1,1) (1,1))
     -- print(funcaoTop a (1,1))
     --print (getGrupoEvalorCelulasTabuleiro tabuleiroInicialOtimizado)
     print (length (agruparDuplicatas tabuleiroInicialOtimizado (1,1)))
     print "Hello!"
+=======
+    -- print tabuleiroInicialOtimizado 
+    print (funcaoTop a (1,1))
+>>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
