@@ -73,17 +73,11 @@ celula (7,1) = (9,4,[])
 celula (7,2) = (10,3,[])
 celula (7,3) = (10,4,[])
 celula (7,4) = (10,-1,[])
-<<<<<<< HEAD
 celula (7,5) = (10,-1,[])
 celula (7,6) = (11,1,[])
 celula (7,7) = (8,3,[])
 -- celula de controle
 celula (-1,-1) = (-1,-1,[-1])
-=======
-celula (7,5) = (10,3,[])
-celula (7,6) = (10,-1,[])
-celula (7,7) = (8,5,[])
->>>>>>> e8373d551e8a5310a8c454f6b388dbaacf99ef16
 
 initTabuleiro :: Tabuleiro
 initTabuleiro = tabuleiro (array ((1,1), (7,7)) [

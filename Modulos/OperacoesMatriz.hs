@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,filterById,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado,agruparDuplicatas) where
-import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
-import Data.List(intersect, (\\))
-=======
 module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, otimizarTabuleiro, tabuleiroInicialOtimizado) where
 import Modulos.Construtores ( Celula, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List((\\))
->>>>>>> e8373d551e8a5310a8c454f6b388dbaacf99ef16
 import Data.Array (Array, array, (//), (!))
 
 tamanhoGrupo :: Int -> Int
@@ -136,11 +130,4 @@ allDifferent []     = True
 allDifferent (x:xs) = x `notElem` xs && allDifferent xs
 
 agruparDuplicatas :: Tabuleiro -> (Int ,Int) -> [(Int,Int)]
-<<<<<<< HEAD
-agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
-
-agruparValoresGrupo :: Tabuleiro -> Int  -> [Int]
-agruparValoresGrupo tb idgp = filter (\val -> val /= -1) []
-=======
 agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..tamanhoTabuleiro tb], y<-[1..tamanhoTabuleiro tb]]
->>>>>>> e8373d551e8a5310a8c454f6b388dbaacf99ef16
