@@ -140,10 +140,7 @@ allDifferent (x:xs) = x `notElem` xs && allDifferent xs
 
 agruparDuplicatas :: Tabuleiro -> (Int ,Int) -> [(Int,Int)]
 <<<<<<< HEAD
-agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..4], y<-[1..4]]
+agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
 
 agruparValoresGrupo :: Tabuleiro -> Int  -> [Int]
 agruparValoresGrupo tb idgp = filter (\val -> val /= -1) []
-=======
-agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
->>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
