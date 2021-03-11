@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-module Modulos.OperacoesMatriz(getCand, agruparDuplicatas,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
-=======
-module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,filterById,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado) where
->>>>>>> 4079c697458c531ce50986b81d65453ccf7c5f27
+module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,filterById,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, getPosAdjacentes, isCandidato, getCelulaPos,getValorAdjacentes, preencherValorCandidatosTabuleiro,updateCandidatosTabuleiro,preencheUnicosCandidatosTabuleiro,otimizarTabuleiro,tabuleiroInicialOtimizado,agruparDuplicatas) where
 import Modulos.Construtores ( Celula, Valor, Candidatos, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List(intersect, (\\))
 import Data.Array (Array, array, (//), (!))
@@ -139,7 +135,6 @@ allDifferent []     = True
 allDifferent (x:xs) = x `notElem` xs && allDifferent xs
 
 agruparDuplicatas :: Tabuleiro -> (Int ,Int) -> [(Int,Int)]
-<<<<<<< HEAD
 agruparDuplicatas tb (x,y) = filter (\(id,val) -> val /= -1 && (id,val) == getGrupoEvalor(tb!(x,y))) [getGrupoEvalor(tb!(x,y)) | x<-[1..7], y<-[1..7]]
 
 agruparValoresGrupo :: Tabuleiro -> Int  -> [Int]
