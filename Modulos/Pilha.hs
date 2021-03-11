@@ -1,7 +1,7 @@
 module Modulos.Pilha(separarCandidatos, setTabPilha, funcaoTop) where
 import Data.Array ((!))
 import Modulos.Construtores(Tabuleiro,setCands,setCand)
-import Modulos.OperacoesMatriz(getCand,getGrupoEvalorCelulasTabuleiro,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,updateCandidatosTabuleiro,verfMesmoUnicoElementoAdjacenteTabuleiro,preencheUnicosCandidatosTabuleiro,proximaCoordenada, allDifferent, otimizarTabuleiro)
+import Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, allDifferent, otimizarTabuleiro)
 
 type Pilha = [((Int,Int), Tabuleiro)]
 

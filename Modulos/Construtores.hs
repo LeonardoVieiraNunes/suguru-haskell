@@ -1,10 +1,8 @@
-module Modulos.Construtores(Celula, Valor, Tabuleiro, Candidatos,setCand,celula, tabuleiro, setValue,initTabuleiro,tamanhoTabuleiro, setCands) where
+module Modulos.Construtores(Celula, Tabuleiro, setValue, celula, tabuleiro, initTabuleiro, tamanhoTabuleiro, setCands, setCand) where
+
 
 import Data.Array (Array, array, (//), (!))
 
-type IdGrupo = Int
-type Valor = Int
-type Candidatos = [Int]
 type Celula = (Int, Int, [Int])
 type Tabuleiro = Array (Int,Int) Celula
 
@@ -77,8 +75,6 @@ celula (7,4) = (10,-1,[])
 celula (7,5) = (10,3,[])
 celula (7,6) = (10,-1,[])
 celula (7,7) = (8,5,[])
--- celula de controle
-celula (-1,-1) = (-1,-1,[-1])
 
 initTabuleiro :: Tabuleiro
 initTabuleiro = tabuleiro (array ((1,1), (7,7)) [
