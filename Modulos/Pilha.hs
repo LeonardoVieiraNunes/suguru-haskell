@@ -1,7 +1,7 @@
 module Modulos.Pilha(separarCandidatos, setTabPilha, funcaoTop) where
 import Data.Array ((!))
 import Modulos.Construtores(Tabuleiro,setCands,setCand)
-import Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, allDifferent, otimizarTabuleiro)
+import Modulos.OperacoesMatriz(getCand,verfExisteCelulaSemCandidatoTabuleiro,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, allDifferent, otimizarTabuleiro)
 
 type Pilha = [((Int,Int), Tabuleiro)]
 
@@ -25,11 +25,12 @@ getTabuleiro ((x,y), tab) = tab
 funcaoTop :: Pilha -> (Int,Int) -> Pilha
 funcaoTop p (x,y) =
     let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
+        existeCelulaSemCandidato = verfExisteCelulaSemCandidatoTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
         todosDiferentes = allDifferent(getGrupoEvalorCelulasTabuleiro(otimizarTabuleiro(getTabuleiro (head p))))
         estaCompleto = verfTabuleiroCompleto(getTabuleiro(head p))
         in if estaCompleto then
-            p
-        else if not erro1 && todosDiferentes then
+            [head p]
+        else if not erro1 && todosDiferentes && not existeCelulaSemCandidato then
             let nPilha = setTabPilha p (otimizarTabuleiro (getTabuleiro (head p))) (x,y)
             in funcaoTop nPilha (proximaCoordenada (getCoordenada (head p)))
         else

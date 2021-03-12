@@ -1,19 +1,20 @@
-module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, otimizarTabuleiro, tabuleiroInicialOtimizado) where
+module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,verfExisteCelulaSemCandidatoTabuleiro,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, otimizarTabuleiro, tabuleiroInicialOtimizado) where
 import Modulos.Construtores ( Celula, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List((\\))
 import Data.Array (Array, array, (//), (!))
 
 tamanhoGrupo :: Int -> Int
 tamanhoGrupo 1 = 6
-tamanhoGrupo 2 = 6
-tamanhoGrupo 3 = 1
-tamanhoGrupo 4 = 5
-tamanhoGrupo 5 = 6
-tamanhoGrupo 6 = 6
-tamanhoGrupo 7 = 6
+tamanhoGrupo 2 = 4
+tamanhoGrupo 3 = 5
+tamanhoGrupo 4 = 6
+tamanhoGrupo 5 = 5
+tamanhoGrupo 6 = 5
+tamanhoGrupo 7 = 3
 tamanhoGrupo 8 = 5
-tamanhoGrupo 9 = 3
-tamanhoGrupo 10 = 5
+tamanhoGrupo 9 = 5
+tamanhoGrupo 10 = 4
+tamanhoGrupo 11 = 1
 
 isInRange :: Tabuleiro -> Int -> Int -> Bool
 isInRange t i j = i <= tamanhoTabuleiro t && j <= tamanhoTabuleiro t
@@ -112,6 +113,12 @@ verfMesmoUnicoCandAdjacenteCelula (x,y) tb = length (getCand (tb!(x,y))) == 1 &&
 
 verfMesmoUnicoElementoAdjacenteTabuleiro :: Tabuleiro -> Bool
 verfMesmoUnicoElementoAdjacenteTabuleiro tb = or ([verfMesmoUnicoCandAdjacenteCelula (x,y) tb | x<-[1..tamanhoTabuleiro tb], y<-[1..tamanhoTabuleiro tb]])
+
+verfCelulaSemCandidato :: (Int,Int) -> Tabuleiro -> Bool
+verfCelulaSemCandidato (x,y) tb = getVal (tb!(x,y)) == -1 && null (getCand(tb!(x,y)))
+
+verfExisteCelulaSemCandidatoTabuleiro :: Tabuleiro -> Bool
+verfExisteCelulaSemCandidatoTabuleiro tb = or ([verfCelulaSemCandidato (x,y) tb | x<-[1..tamanhoTabuleiro tb], y<-[1..tamanhoTabuleiro tb]])
 
 verfTabuleiroCompleto :: Tabuleiro -> Bool
 verfTabuleiroCompleto tb = and [getVal(tb!(x,y)) /= -1 | x<-[1..tamanhoTabuleiro tb], y<-[1..tamanhoTabuleiro tb]]
