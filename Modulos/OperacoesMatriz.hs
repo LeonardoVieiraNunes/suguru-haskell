@@ -1,4 +1,4 @@
-module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,verfExisteCelulaSemCandidatoTabuleiro,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, otimizarTabuleiro, tabuleiroInicialOtimizado) where
+module Modulos.OperacoesMatriz(getCand,verfTabuleiroCompleto,agruparDuplicatas,verfExisteCelulaSemCandidatoTabuleiro,allDifferent,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, otimizarTabuleiro, tabuleiroInicialOtimizado) where
 import Modulos.Construtores ( Celula, tabuleiro, Tabuleiro, tamanhoTabuleiro, setCands, celula, initTabuleiro)
 import Data.List((\\))
 import Data.Array (Array, array, (//), (!))
