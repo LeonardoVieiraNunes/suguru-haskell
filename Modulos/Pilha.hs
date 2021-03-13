@@ -24,13 +24,13 @@ getTabuleiro ((x,y), tab) = tab
 
 resolveSuguru :: Pilha -> (Int,Int) -> Pilha
 resolveSuguru p (x,y) =
-    let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
+    let existeMesmoValorCelulaAdjacente = verfMesmoUnicoElementoAdjacenteTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
         existeCelulaSemCandidato = verfExisteCelulaSemCandidatoTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
         todosDiferentes = allDifferent(getGrupoEvalorCelulasTabuleiro(otimizarTabuleiro(getTabuleiro (head p))))
         estaCompleto = verfTabuleiroCompleto(getTabuleiro(head p))
         in if estaCompleto then
             [head p]
-        else if not erro1 && todosDiferentes && not existeCelulaSemCandidato then
+        else if not existeMesmoValorCelulaAdjacente && todosDiferentes && not existeCelulaSemCandidato then
             let nPilha = setTabPilha p (otimizarTabuleiro (getTabuleiro (head p))) (x,y)
             in resolveSuguru nPilha (proximaCoordenada (getCoordenada (head p)))
         else
