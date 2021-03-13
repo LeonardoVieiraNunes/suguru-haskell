@@ -5,16 +5,22 @@ import Data.Array (Array, array, (//), (!))
 
 tamanhoGrupo :: Int -> Int
 tamanhoGrupo 1 = 6
-tamanhoGrupo 2 = 4
-tamanhoGrupo 3 = 5
-tamanhoGrupo 4 = 6
-tamanhoGrupo 5 = 5
-tamanhoGrupo 6 = 5
-tamanhoGrupo 7 = 3
+tamanhoGrupo 2 = 6
+tamanhoGrupo 3 = 7
+tamanhoGrupo 4 = 3
+tamanhoGrupo 5 = 6
+tamanhoGrupo 6 = 7
+tamanhoGrupo 7 = 6
 tamanhoGrupo 8 = 5
 tamanhoGrupo 9 = 5
-tamanhoGrupo 10 = 4
-tamanhoGrupo 11 = 1
+tamanhoGrupo 10 = 7
+tamanhoGrupo 11 = 7
+tamanhoGrupo 12 = 7
+tamanhoGrupo 13 = 4
+tamanhoGrupo 14 = 6
+tamanhoGrupo 15 = 6
+tamanhoGrupo 16 = 6
+tamanhoGrupo 17 = 6
 
 isInRange :: Tabuleiro -> Int -> Int -> Bool
 isInRange t i j = i <= tamanhoTabuleiro t && j <= tamanhoTabuleiro t
@@ -105,7 +111,7 @@ tabuleiroInicialOtimizado =
     in otimizarTabuleiro b
 
 proximaCoordenada :: (Int,Int) -> (Int,Int)
-proximaCoordenada (x,y) | y < 7 = (x,y+1)
+proximaCoordenada (x,y) | y < tamanhoTabuleiro initTabuleiro = (x,y+1)
                         | otherwise = (x+1,1)
 
 verfMesmoUnicoCandAdjacenteCelula :: (Int,Int) -> Tabuleiro -> Bool
