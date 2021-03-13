@@ -1,12 +1,10 @@
 module Modulos.Construtores(Tabuleiro,setCands,setCand,Celula,tamanhoTabuleiro, initTabuleiro,tamanhoGrupos) where
-
-
 import Data.Array (Array, array, (//), (!))
 
 type Celula = (Int, Int, [Int])
 type Tabuleiro = Array (Int,Int) Celula
 
---Define tamanho dos grupos (áreas) do tabuleiro/ precisa estar aqui?
+--Define tamanho dos grupos (áreas) do tabuleiro
 tamanhoGrupos :: Int -> Int
 tamanhoGrupos 1 = 6
 tamanhoGrupos 2 = 6
@@ -140,15 +138,12 @@ celula (10,10) = (15,2,[])
 
 -- celula de controle
 celula (-1,-1) = (-1,-1,[-1])
---inicializador do tabuleiro
+
+--inicializador do tabuleiro (dado na entrada)
 initTabuleiro :: Tabuleiro
 initTabuleiro = array ((1,1), (10,10)) [((x,y),celula(x,y)) | x<-[1..10], y<-[1..10]]
 
--- desnecessaŕio?
---tabuleiro :: Tabuleiro -> Tabuleiro
---tabuleiro tb = tb
-
--- Calcula dimensões do tabuleiro, assume uma matriz quadrada
+-- Calcula dimensões do tabuleiro, assumindo uma matriz quadrada
 tamanhoTabuleiro :: Tabuleiro -> Int 
 tamanhoTabuleiro tb = round (sqrt (fromIntegral (length  tb)))
 
@@ -161,19 +156,17 @@ changeValorCelula i j nVal =
 -- Chama a função anterior a partir da coordenada e tabuleiro especificados
 setValue :: (Int, Int) -> Int -> Tabuleiro -> Tabuleiro
 setValue (x,y) a tb = tb // [((x,y), changeValorCelula x y a)]
+
 -- semelhante a changeValor, porém modifica candidatos
 changeCandsCelula :: Int -> Int -> [Int] -> Celula
 changeCandsCelula i j nCand =
     let (id,val,cand) = celula (i,j)
     in (id,val,nCand)
--- Aplica valor de candidato como valor?
-changeCandCelula :: Int -> Int -> Int -> Celula
-changeCandCelula i j nCand =
-    let (id,val,cand) = celula (i,j)
-    in (id,nCand,cand)
--- semelhante a setValue, chama changeCands a partir do tabuleiro
+
+-- semelhante a setValue, chama changeCandsCelula a partir do tabuleiro
 setCands :: (Int, Int) -> [Int] -> Tabuleiro -> Tabuleiro
 setCands (x,y) a tb = tb // [((x,y), changeCandsCelula x y a)]
--- semelhante a setValue, chama changeCand a partir do tabuleiro
+
+-- semelhante a setValue, chama changeValorCelula a partir do tabuleiro
 setCand :: (Int,Int) -> Int -> Tabuleiro -> Tabuleiro
-setCand (x,y) cand tb = tb // [((x,y), changeCandCelula x y cand)]
+setCand (x,y) cand tb = tb // [((x,y), changeValorCelula x y cand)]

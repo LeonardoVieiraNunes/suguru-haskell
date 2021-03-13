@@ -1,4 +1,4 @@
-module Modulos.Pilha(separarCandidatos, setTabPilha, funcaoTop) where
+module Modulos.Pilha(separarCandidatos, setTabPilha, resolveSuguru) where
 import Data.Array ((!))
 import Modulos.Construtores(Tabuleiro,setCands,setCand, initTabuleiro)
 import Modulos.OperacoesMatriz(getCand,verfExisteCelulaSemCandidatoTabuleiro,verfTabuleiroCompleto,getGrupoEvalorCelulasTabuleiro,getVal,verfMesmoUnicoElementoAdjacenteTabuleiro,proximaCoordenada, allDifferent, otimizarTabuleiro, tabuleiroInicialOtimizado)
@@ -22,8 +22,8 @@ getCoordenada ((x,y),tb) = (x,y)
 getTabuleiro :: ((Int,Int),Tabuleiro) -> Tabuleiro
 getTabuleiro ((x,y), tab) = tab
 
-funcaoTop :: Pilha -> (Int,Int) -> Pilha
-funcaoTop p (x,y) =
+resolveSuguru :: Pilha -> (Int,Int) -> Pilha
+resolveSuguru p (x,y) =
     let erro1 = verfMesmoUnicoElementoAdjacenteTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
         existeCelulaSemCandidato = verfExisteCelulaSemCandidatoTabuleiro(otimizarTabuleiro(getTabuleiro (head p)))
         todosDiferentes = allDifferent(getGrupoEvalorCelulasTabuleiro(otimizarTabuleiro(getTabuleiro (head p))))
@@ -32,6 +32,6 @@ funcaoTop p (x,y) =
             [head p]
         else if not erro1 && todosDiferentes && not existeCelulaSemCandidato then
             let nPilha = setTabPilha p (otimizarTabuleiro (getTabuleiro (head p))) (x,y)
-            in funcaoTop nPilha (proximaCoordenada (getCoordenada (head p)))
+            in resolveSuguru nPilha (proximaCoordenada (getCoordenada (head p)))
         else
-            funcaoTop (tail p) (getCoordenada (head (tail p)))
+            resolveSuguru (tail p) (getCoordenada (head (tail p)))
