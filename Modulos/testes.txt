@@ -137,6 +137,10 @@ celula (10,8) = (17,2,[])
 celula (10,9) = (15,1,[])
 celula (10,10) = (15,2,[])
 
+
+initTabuleiro :: Tabuleiro
+initTabuleiro = array ((1,1), (10,10)) [((x,y),celula(x,y)) | x<-[1..10], y<-[1..10]]
+
 ------------------------------------
 
 Tabuleiro 7x7 - 1
@@ -211,6 +215,9 @@ celula (7,5) = (10,3,[])
 celula (7,6) = (10,-1,[])
 celula (7,7) = (8,5,[])
 
+
+initTabuleiro :: Tabuleiro
+initTabuleiro = array ((1,1), (7,7)) [((x,y),celula(x,y)) | x<-[1..7], y<-[1..7]]
 ------------------------------------
 
 Tabuleiro 7x7 - 2
@@ -285,3 +292,7 @@ celula (7,4) = (10,-1,[])
 celula (7,5) = (10,-1,[])
 celula (7,6) = (11,1,[])
 celula (7,7) = (8,3,[])
+
+
+initTabuleiro :: Tabuleiro
+initTabuleiro = array ((1,1), (7,7)) [((x,y),celula(x,y)) | x<-[1..7], y<-[1..7]]
