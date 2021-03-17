@@ -3,7 +3,7 @@ import Data.Array (Array, array, (//), (!))
 
 type Celula = (Int, Int, [Int])
 type Tabuleiro = Array (Int,Int) Celula
-
+--Tabuleiro número 40
 --Define tamanho dos grupos (áreas) do tabuleiro
 tamanhoGrupos :: Int -> Int
 tamanhoGrupos 1 = 6
